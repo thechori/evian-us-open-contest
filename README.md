@@ -8,7 +8,9 @@ This Node.js script automates the daily entry to the contest [here](https://evia
 
 2. Run `npm install` to install all of the project dependencies
 
-3. Add your email(s) to the `emails.js` file
+3. Rename the `config/emails.example.js` file to `config/emails.js` and add your email(s) to the file
+
+4. Rename the `config/server.example.js` file to `config/server.js` and add your SMTP server details for the 
 
 3. Install a new cronjob to run the script on a daily basis by typing the following:
 

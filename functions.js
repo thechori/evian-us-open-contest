@@ -2,6 +2,19 @@ let fetch = require('node-fetch');
 let nodemailer = require('nodemailer');
 let FormData = require('form-data');
 const config = require('./config/server');
+const program = require('commander');
+
+// Handle the CLI flags
+console.log('Handling CLI flags...');
+program
+  .option('-e --emails', 'Send feedback emails (requires SMTP server configuration)')
+  .parse(process.argv);
+
+if (program.emails) {
+  console.log('Sending emails!');
+} else {
+  console.log('Not sending emails...');
+}
 
 // Takes an email address and submits it to the contest page
 exports.submit = function (email) {
@@ -15,22 +28,30 @@ exports.submit = function (email) {
     })
     .then(res => res.json())
     .then(json => {
-      exports.sendEmail(email, json, true)
-        .then(() => {
-          resolve(true);
-        })
-        .catch(err => {
-          reject(err);
-        });
+      if (program.emails) {
+        exports.sendEmail(email, json, true)
+          .then(() => {
+            resolve(true);
+          })
+          .catch(err => {
+            reject(err);
+          });
+      } else {
+        resolve(true);
+      }
     })
     .catch(err => {
-      exports.sendEmail(email, err, false)
-        .then(() => {
-          resolve(false);
-        })
-        .catch(err => {
-          reject(err);
-        })
+      if (program.emails) {
+        exports.sendEmail(email, err, false)
+          .then(() => {
+            resolve(false);
+          })
+          .catch(err => {
+            reject(err);
+          })
+      } else {
+        resolve(false);
+      }
     })
   });
 }
