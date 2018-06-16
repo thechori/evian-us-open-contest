@@ -23,7 +23,7 @@ This Node.js script automates the daily entry to the contest [here](https://evia
 
 6. Add the following line to run the script daily at 8:00am local time
 
-    `0 8 * * * * node path/to/your/evian-us-open-contest/index.js`
+    `0 8 * * * node path/to/your/evian-us-open-contest/index.js`
 
     **Note**: Ensure that `node` is in your `$PATH` variable for this to work properly
 
